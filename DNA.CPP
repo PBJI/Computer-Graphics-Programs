@@ -51,7 +51,19 @@ int main() {
 	double oneWave = PI;
 	double phaseAngle = oneWave / 2;
 	double totalAngle = oneWave * 5; // 5 waves for now
+	double amplitude = 25;
+	int shiftY = getmaxy() / 2;
 
+	for (int x = 0; x < MAX_X; x++) {
+		double currentY1Angle = totalAngle * ((double) x / (double) MAX_X);
+		double currentY2Angle = currentY1Angle + phaseAngle;
+		double Y1 = amplitude * sin(currentY1Angle);
+		double Y2 = amplitude * sin(currentY2Angle);
+		putpixel(x, Y1 + shiftY, WHITE);
+		putpixel(x, Y2 + shiftY, RED);
+		//Debugging line:
+		//cout << x << " " << Y1 << " " << Y2 << endl;
+	}
 
 
 	getch();
