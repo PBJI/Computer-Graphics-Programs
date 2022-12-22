@@ -8,6 +8,8 @@
 int main() {
 	int graphicsDriver=DETECT, graphicsMode;
 	initgraph(&graphicsDriver, &graphicsMode, "C:\\TURBOC3\\BGI");
+
+	//Some brainstorming on the idea:
 	//DNA requires two helical curves parallel with a little different phase.
 	//
 	//It will be easier to draw the helical curves if confine it inside a
@@ -42,6 +44,12 @@ int main() {
 	//will also be experimented and then deliberated upon. In terms of the
 	//program algorithm, basically the ratio of radians upon number of pixels
 	//will deliberated upon.
+
+
+
+	//Upcoming features:
+	//Thickness of the DNA
+	//Colorful Strands
 	int MAX_X = getmaxx();
 	//TO BE FIXED: (Size of array should be constant during compilation
 	//but we need an array that is dynamically defined during runtime.)
@@ -50,9 +58,13 @@ int main() {
 
 	double oneWave = PI;
 	double phaseAngle = oneWave / 2;
-	double totalAngle = oneWave * 5; // 5 waves for now
-	double amplitude = 25;
-	int shiftY = getmaxy() / 2;
+	double waves = 8;						 //Experimental
+	double totalAngle = oneWave * waves; // 5 waves for now
+	double amplitude = 20;					 //Experimental
+	int shiftY = getmaxy() / 2;			   	 //Experimental
+	int linesPerWave = 10; //DNA protein AGDT lines count
+	int xpixPerWave = (double) MAX_X / waves;
+	int spacePerLine = xpixPerWave / linesPerWave;
 
 	for (int x = 0; x < MAX_X; x++) {
 		double currentY1Angle = totalAngle * ((double) x / (double) MAX_X);
@@ -60,7 +72,11 @@ int main() {
 		double Y1 = amplitude * sin(currentY1Angle);
 		double Y2 = amplitude * sin(currentY2Angle);
 		putpixel(x, Y1 + shiftY, WHITE);
-		putpixel(x, Y2 + shiftY, RED);
+		putpixel(x, Y2 + shiftY, WHITE);
+		if ( x % spacePerLine == 0 ) {
+			line(x, Y1 + shiftY, x, Y2 + shiftY);
+			setcolor(WHITE);
+		}
 		//Debugging line:
 		//cout << x << " " << Y1 << " " << Y2 << endl;
 	}
